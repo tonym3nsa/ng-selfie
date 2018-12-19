@@ -1,0 +1,18 @@
+video {
+  width: 100%;
+  display: block;
+}
+
+.filters-thumb img {
+  width: 100%;
+  display: block;
+  cursor: pointer;
+}
+
+.snapped-photo img{
+  width: 100%;
+}
+
+.pointer {
+cursor: pointer;
+}

@@ -1,35 +1,39 @@
-
-
 <div class="container">
-  <div class="row">
-
+  <div class="row" [hidden]="imageReady == true">
+    <div class="col-md-3"></div>
     <div class="col-md-6" #staging>
-      <video #selfie></video>
-      <div class="row">
-        <!--<button (click)="start()" class="btn btn-primary">Play</button>-->
 
-        <!--<button (click)="pause()" class="btn btn-warning">Pause</button>-->
-        <!--<button (click)="resume()" class="btn btn-info">Resume</button>-->
-        <!--<button (click)="sound()" class="btn btn-danger">Play with Sound</button>-->
+      <video #selfie></video>
+
+      <div class="row">
         <button (click)="takePhoto()">Take photo</button>
       </div>
-
-
-
     </div>
-    <div class="col-md-6">
-      <div *ngIf="imageReady ==  true">
+    <div class="col-md-3"></div>
+  </div>
+  <div class="row" *ngIf="imageReady ==  true">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 snapped-photo">
+
         <figure [ngClass]="appliedFilter">
           <img [src]="imageURL"/>
         </figure>
+        <button (click)="reset();">Reset</button>
         <div *ngIf="filters.length > 0">
+          <div class="row">
+            <div class="col-md-3 filters-thumb" *ngFor="let filter of filters">
+              <div class="pointer" (click)="selectFilter(filter)">
+                <figure [ngClass]="filter">
+                  <img [src]="imageURL"/>
+                  <div>{{filter}}</div>
+                </figure>
+              </div>
+            </div>
+          </div>
 
-          <select (change)="selectFilter($event)">
-            <option *ngFor="let filter of filters" [attr.name]="filter">{{filter}}</option>
-          </select>
-        </div>
       </div>
 
     </div>
+    <div class="col-md-3"></div>
   </div>
 </div>

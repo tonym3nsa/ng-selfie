@@ -1,5 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {st} from '@angular/core/src/render3';
+import {Component, OnInit, ViewChild, Input} from '@angular/core';
 
 
 @Component({
@@ -10,11 +9,11 @@ import {st} from '@angular/core/src/render3';
 export class SelfieComponent implements OnInit {
   @ViewChild('selfie') selfie: any;
   @ViewChild('staging') staging: any;
+  @Input() videoHeight: any;
   video: any;
-  displayControls: any;
   imageReady: boolean;
   imageURL: string;
-  filterList: any;
+  hideCamera: boolean;
   filters: any;
   appliedFilter: any;
 
@@ -23,6 +22,7 @@ export class SelfieComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.imageReady = false;
     this.video = this.selfie.nativeElement;
     this.getFilters();
     this.startCamera();
@@ -30,8 +30,8 @@ export class SelfieComponent implements OnInit {
   }
 
   getFilters() {
-    const stylesheets  = document.styleSheets;
-    console.log('sheets: ', stylesheets[0])
+    const stylesheets = document.styleSheets;
+
     // @ts-ignore
     const filterList = stylesheets[1].rules;
 
@@ -49,12 +49,11 @@ export class SelfieComponent implements OnInit {
 
     }
 
-    console.log('stylesheet : ', this.filters);
   }
 
-  selectFilter(event) {
-    console.log(event.srcElement.value)
-    this.appliedFilter = event.srcElement.value;
+  selectFilter(filter) {
+    console.log(filter);
+    this.appliedFilter = filter;
   }
 
   startCamera() {
@@ -73,42 +72,31 @@ export class SelfieComponent implements OnInit {
     browser.mediaDevices.getUserMedia(config).then(stream => {
 
       this.video.srcObject = stream;
+      console.log();
       this.video.play();
+      document.querySelector('video').style.height = this.videoHeight.toString() + 'px';
     });
   }
 
-  start() {
-    this.initCamera({video: true, audio: false});
+  reset() {
+    this.imageReady = false;
   }
 
-  sound() {
-    this.initCamera({video: true, audio: true});
-  }
-
-  pause() {
-    this.video.pause();
-  }
-
-
-  resume() {
-    this.video.play();
-  }
 
   takePhoto() {
-    console.log('>>>');
-    let canvas = document.createElement('canvas');
-    console.log('staging', this.staging.nativeElement.offsetWidth)
-const canvasWidth = this.staging.nativeElement.offsetWidth;
+    const canvas = document.createElement('canvas');
+
+    console.log('video: ', canvas.height);
+    console.log('staging', this.staging.nativeElement.offsetWidth);
+    const canvasWidth = this.staging.nativeElement.offsetWidth;
     canvas.width = canvasWidth;
-    canvas.height = 500;
-    var ctx = canvas.getContext('2d');
-    //draw image to canvas. scale to target dimensions
+    canvas.height = this.videoHeight;
+    const ctx = canvas.getContext('2d');
+    // draw image to canvas. scale to target dimensions
     ctx.drawImage(this.video, 0, 0, canvas.width, canvas.height);
     this.imageReady = true;
-//convert to desired file format
+    // convert to desired file format
     this.imageURL = canvas.toDataURL('image/jpeg'); // can also use 'image/png'
-    // console.log('data url: ', dataURI);
-
   }
 
 }
