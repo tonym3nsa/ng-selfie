@@ -30,13 +30,16 @@ export class SelfieComponent implements OnInit {
   }
 
   getFilters() {
-    const stylesheets = document.styleSheets;
-    this.filterList = stylesheets[1].rules;
+    const stylesheets  = document.styleSheets;
+    console.log('sheets: ', stylesheets[0])
+    // @ts-ignore
+    const filterList = stylesheets[1].rules;
+
     this.filters = [];
-    console.log('filter list: ', this.filterList);
-    for (let i = 0; i < this.filterList.length; i++) {
-      if (this.filterList[i].selectorText.includes('.filter-') && !this.filterList[i].selectorText.includes('before')) {
-        this.filters.push(this.filterList[i].selectorText);
+    console.log('filter list: ', filterList);
+    for (let i = 0; i < filterList.length; i++) {
+      if (filterList[i].selectorText.includes('.filter-') && !filterList[i].selectorText.includes('before')) {
+        this.filters.push(filterList[i].selectorText);
       }
     }
 
