@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container app">
   <div class="row" [hidden]="imageReady == true">
     <div class="col-md-3"></div>
     <div class="col-md-6" #staging>
@@ -6,7 +6,9 @@
       <video #selfie></video>
 
       <div class="row">
-        <button (click)="takePhoto()">Take photo</button>
+        <div class="col-md-12">
+        <button class="btn btn-snap" (click)="takePhoto()">Take photo</button>
+      </div>
       </div>
     </div>
     <div class="col-md-3"></div>
@@ -17,8 +19,11 @@
 
         <figure [ngClass]="appliedFilter">
           <img [src]="imageURL"/>
+
         </figure>
-        <button (click)="reset();">Reset</button>
+      <div class="control">
+      <a (click)="downloadImg(imageURL);" class="btn btn-download"> Download Image</a>
+       &nbsp;&nbsp; <button class="btn btn-snap" (click)="reset();">Reset</button></div>
         <div *ngIf="filters.length > 0">
           <div class="row">
             <div class="col-md-3 filters-thumb" *ngFor="let filter of filters">
@@ -26,6 +31,7 @@
                 <figure [ngClass]="filter">
                   <img [src]="imageURL"/>
                   <div>{{filter}}</div>
+
                 </figure>
               </div>
             </div>

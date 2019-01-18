@@ -1,6 +1,7 @@
 video {
   width: 100%;
   display: block;
+  box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
 }
 
 .filters-thumb img {
@@ -15,4 +16,16 @@ video {
 
 .pointer {
 cursor: pointer;
+  padding: 10px;
+  background-color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.app {
+  margin-top: 10%;
+}
+
+.control {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }

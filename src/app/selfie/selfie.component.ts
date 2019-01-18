@@ -74,12 +74,24 @@ export class SelfieComponent implements OnInit {
       this.video.srcObject = stream;
       console.log();
       this.video.play();
-      document.querySelector('video').style.height = this.videoHeight.toString() + 'px';
+
     });
   }
 
   reset() {
     this.imageReady = false;
+  }
+
+
+
+  downloadImg(dataurl) {
+    const a = document.createElement('a');
+    a.href = dataurl;
+    a.setAttribute('download', 'NgSelfieImage.jpg');
+    const b = document.createEvent('MouseEvents');
+    b.initEvent('click', false, true);
+    a.dispatchEvent(b);
+    return false;
   }
 
 
